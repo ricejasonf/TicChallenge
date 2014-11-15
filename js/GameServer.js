@@ -27,7 +27,7 @@ GameServer.prototype = {
 			return;
 		this.acceptingCommands = false;
 		if (!this.expectingAnswer && command == 'open')		
-			this.currentGame = value;
+			this.setCurrentGame(value);
 		if (!this.currentGame)
 			throw "GameServer command malformed";
 		var self = this;
@@ -82,6 +82,11 @@ GameServer.prototype = {
 			return;
 		for (var i = 0; i < game.innerGames.length; i++)
 			this.createGameIndex(game.innerGames[i]);
+	},
+
+	setCurrentGame: function(game)
+	{
+		this.currentGame = game;
 	}
 }
 

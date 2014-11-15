@@ -10,7 +10,7 @@ var Games = {
 		//notify listener
 		this._commandListener.call(this, command, value);
 	},
-	_setCommandListener: function(fn)
+	setCommandListener: function(fn)
 	{
 		this._commandListener = fn;
 	}
