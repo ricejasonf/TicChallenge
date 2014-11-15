@@ -3,18 +3,26 @@
  */
 (function() {
 
-var GameCanvas = function(canvasId, gameServer)
+var GameCanvas = function(canvasId, gameServer, gameUis)
 {
 	this.gameServer = gameServer;
+	this.gameUis = gameUis;
 	this.canvas = document.getElementById(canvasId);
 	this.canvas.addEventListener("mousedown", function(ev) {
 		self.click(ev);
 	});
-	this.buildGameRefs();
+	this.ctx = this.canvas.getContext('2d');
 }
 window.GameCanvas = GameCanvas;
 
 GameCanvas.prototype = {
+	render: function()
+	{
+		var ui = this.gameUis
+			.getGameUiByGame(this.gameServer.currentGame);
+		this.ctx.drawImage(ui.canvas, 0, 0);
+	},
+
 	click: function(ev)
 	{
 		var pos = this.getRelativeMousePosition(ev);
