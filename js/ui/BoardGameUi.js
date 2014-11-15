@@ -1,8 +1,7 @@
 /*
  * Copyright 2014 Jason Rice
  */
-window.GameUis = {};
-(function() {
+(function(GameUis) {
 	
 var BoardGameUi = function(options)
 {
@@ -16,7 +15,7 @@ var BoardGameUi = function(options)
 	this.canvas.height = this.width;
 	this.ctx = this.canvas.getContext('2d');
 }
-window.GameUis.BoardGame = BoardGameUi;
+GameUis.BoardGame = BoardGameUi;
 
 BoardGameUi.prototype = {
 
@@ -77,8 +76,8 @@ BoardGameUi.prototype = {
 
 	getInnerGameUi: function(i)
 	{
-		return this.gameUiManager.getGameUiByGame(this.game.innerGames[i]);
+		return this.gameUiManager.getGameUiByGame(this.game.games[i]);
 	}
 }
 
-})();
+})(window.GameUis);

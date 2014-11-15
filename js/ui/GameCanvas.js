@@ -5,6 +5,7 @@
 
 var GameCanvas = function(canvasId, gameServer, gameUis)
 {
+	var self = this;
 	this.gameServer = gameServer;
 	this.gameUis = gameUis;
 	this.canvas = document.getElementById(canvasId);
@@ -26,8 +27,9 @@ GameCanvas.prototype = {
 	click: function(ev)
 	{
 		var pos = this.getRelativeMousePosition(ev);
-		if (this.gameServer.currentGame)
-			this.gameServer.currentGame.click(pos.x, pos.y);
+		var ui = this.gameUis
+			.getGameUiByGame(this.gameServer.currentGame);
+		ui.click(pos.x, pos.y);
 	},
 
 	getRelativeMousePosition: function(event)

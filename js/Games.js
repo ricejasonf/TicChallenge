@@ -4,7 +4,7 @@
 (function() {
 
 var Games = {
-	command: (server, command, value)
+	command: function(server, command, value)
 	{
 		this._command(server, command, value);
 		//notify listener
@@ -17,4 +17,4 @@ var Games = {
 }
 
 window.Games = Games;
-});
+})();

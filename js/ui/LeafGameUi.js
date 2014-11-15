@@ -1,8 +1,7 @@
 /*
  * Copyright 2014 Jason Rice
  */
-window.GameUis = {};
-(function() {
+(function(GameUis) {
 
 var LeafGameUi = function(options)
 {
@@ -14,11 +13,11 @@ var LeafGameUi = function(options)
 	this.canvas.height = this.width;
 	this.ctx = this.canvas.getContext('2d');
 }
-window.GameUis.LeafGame = LeafGameUi;
+GameUis.LeafGame = LeafGameUi;
 
 LeafGameUi.prototype = {
 	render: GameUis.render,
 	_render: function() { }
 }
 
-})();
+})(window.GameUis);

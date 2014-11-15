@@ -6,6 +6,7 @@
 var GameServer = function(options)
 {
 	this.game = options.game;	
+	this.currentGame = this.game;
 	this.openGameFn = options.openGame;
 	this.players = options.players 
 		|| [ 'Player 1', 'Player 2'];
@@ -15,6 +16,7 @@ var GameServer = function(options)
 	this.gameIndex = [];
 	this.createGameIndex(this.game);
 }
+window.GameServer = GameServer;
 
 GameServer.prototype = {
 	currentPlayerIndex: 0,
@@ -29,8 +31,6 @@ GameServer.prototype = {
 		this.acceptingCommands = false;
 		if (!this.expectingAnswer && command == 'open')		
 			this.setCurrentGame(value);
-		if (!this.currentGame)
-			throw "GameServer command malformed";
 		var self = this;
 		var oldSuccess = success;
 		var newSuccess = function() {

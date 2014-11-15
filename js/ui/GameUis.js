@@ -60,8 +60,8 @@ GameUis.prototype = {
 		options.width = this.width;
 		options.game = game;
 		options.gameUiManager = this;
-		return GameUis[game.type](options);
+		return new GameUis[game.type](options);
 	}
 }
 
-});
+})();
