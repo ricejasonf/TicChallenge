@@ -1,3 +1,6 @@
+/*
+ * Copyright 2014 Jason Rice
+ */
 (function() {
 var playerSymbols = [
 	'x',	
