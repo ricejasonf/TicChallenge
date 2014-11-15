@@ -6,7 +6,8 @@
 var GameServer = function(options)
 {
 	this.game = options.game;	
-	this.players = options.players;
+	this.players = options.players 
+		|| [ 'Player 1', 'Player 2'];
 	this.callbacks = {
 		finish: options.finish
 	}
@@ -54,16 +55,14 @@ GameServer.prototype = {
 	awardState: function()
 	{
 		this.currentGame.state = this.currentPlayerIndex;
-
-		var state = this.game.checkState();
-		if (state !== null)
-			this.finish(state);
-		else
-			this.endTurn();
+		this.endTurn();
 	},
 
 	endTurn: function()
 	{
+		var state = this.game.checkState();
+		if (state !== null)
+			this.finish(state);
 		this.expectingAnswer = null;
 		this.currentPlayerIndex = (this.currentPlayerIndex + 1) 
 			% this.players.length;

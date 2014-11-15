@@ -50,11 +50,14 @@ BoardGame.prototype = {
 
 	checkState: function()
 	{
+		if (this.state != null)
+			return this.state;
 		var states = [];
+		var nullCount;
 		for (var i = 0; i < 9; i++)
 		{
 			states.push(this.games[i].checkState());
-			if (states[i] !== null)
+			if (states[i] != null)
 			{
 				//lateral check
 				if ((i % 3 == 2 && (states[i] == states[i - 1] 
@@ -77,8 +80,12 @@ BoardGame.prototype = {
 					return this.state;
 				} 
 			}
+			else nullCount++;
 		}
-		return null;
+		if (nullCount == 0)
+			this.state = 'stalemate';
+
+		return this.state;
 	}
 }
 
