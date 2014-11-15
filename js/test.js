@@ -1,8 +1,10 @@
+(function () {
 /*
  * Copyright 2014 Jason Rice
  */
-var x = 'x';
-var y = 'o';
+var x = 0;
+var y = 1;
+var n = null;
 
 games.push(new Game({}));
 games.push(new Game({
@@ -11,36 +13,59 @@ games.push(new Game({
 
 games.push(new Game({
 	innerGames: [	x, y, x, 
-					0, y, 0, 
+					n, y, n, 
 					x, y, x]
 	});
 
 games.push(new Game({
 	innerGames: [	y, x, x, 
-					0, 0, 0, 
-					0, 0, 0]
+					n, n, n, 
+					n, n, n]
 	}));
 
 games.push(new Game({
-	innerGames: [	y, 0, x, 
-					0, y, x, 
-					0, 0, y]
+	innerGames: [	y, n, x, 
+					n, y, x, 
+					n, n, y]
 	}));
 
 games.push(new Game({
 	innerGames: [	x, y, x, 
-					0, y, x, 
-					0, x, y]
+					n, y, x, 
+					n, x, y]
 	});
 
 games.push(new Game({
-	innerGames: [	0, 0, 0, 
-					0, 0, 0, 
-					0, 0, 0]
+	innerGames: [	n, n, n, 
+					n, n, n, 
+					n, n, n]
 	}));
 
+var gameCanvas;
 games.push(new Game({
-	innerGames: [	0, games[0], games[0], 
-					0, games[1], games[2], 
-					0, games[3], games[0]]
+	innerGames: [	n, games[0], games[1], 
+					n, games[2], games[3], 
+					games[6], games[4], games[5]]
 	}));
+var server = new GameServer({
+	game: games[7],
+	finish: function(result) 
+	{
+		if (result = 'stalemate')
+			alert('DRAW');
+		else 
+			alert(result + ' wins!');
+	},
+	openGame: function()
+	{
+		gameCanvas.render();		
+	}
+
+var gameUis = new GameUis({
+	server: server,
+	width: 800
+});
+gameCanvas = new GameCanvas('my-canvas', server, gameUis); 
+
+
+})();

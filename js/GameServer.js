@@ -6,6 +6,7 @@
 var GameServer = function(options)
 {
 	this.game = options.game;	
+	this.openGameFn = options.openGame;
 	this.players = options.players 
 		|| [ 'Player 1', 'Player 2'];
 	this.callbacks = {
@@ -87,6 +88,7 @@ GameServer.prototype = {
 	setCurrentGame: function(game)
 	{
 		this.currentGame = game;
+		this.openGameFn.call(this, game);
 	}
 }
 
