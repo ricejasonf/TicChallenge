@@ -4,11 +4,6 @@
 window.GameUis = {};
 (function() {
 
-var playerSymbols = [
-	'x',	
-	'o'
-];
-	
 var LeafGameUi = function(options)
 {
 	this.server = options;
@@ -22,19 +17,8 @@ var LeafGameUi = function(options)
 window.GameUis.LeafGame = LeafGameUi;
 
 LeafGameUi.prototype = {
-
-	render: function()
-	{
-
-	},
-
-	click: function(x, y)
-	{
-		if (this.currentInnerGameUi)
-			this.currentInnerGameUi.click(x, y);
-		else
-			this.openGameByClick(x, y);
-	}
+	render: GameUis.render,
+	_render: function() { }
 }
 
 })();

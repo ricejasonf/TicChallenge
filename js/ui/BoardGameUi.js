@@ -7,11 +7,10 @@ window.GameUis = {};
 var BoardGameUi = function(options)
 {
 	this.server = options;
+	this.gameUiManager = options.gameUiManager;
 	this.game = options.game;
 	this.width = options.width;
-	this.innerGameUis = [	null, null, null,
-							null, null, null,
-							null, null, null];
+
 	this.canvas = document.createElement('canvas');
 	this.canvas.width = this.width;
 	this.canvas.height = this.width;
@@ -21,7 +20,8 @@ window.GameUis.BoardGame = BoardGameUi;
 
 BoardGameUi.prototype = {
 
-	render: function()
+	render: GameUis.render,
+	_render: function()
 	{
 		this.renderGrid();
 		for (var i = 0; i < 9; i++)
@@ -77,21 +77,7 @@ BoardGameUi.prototype = {
 
 	getInnerGameUi: function(i)
 	{
-		if (!this.innerGameUis[i])
-		{
-			this.innerGameUis[i] 
-				= this.createGameUi(this.game.innerGames[i]);
-		}
-		return this.innerGameUis[i];
-	},
-
-	createInnerGameUi: function(game)
-	{
-		var options = {};
-		options.server = this.server;
-		options.game = this.game;
-		options.width = this.width;
-		return window.GameUis[game.type](options);
+		return this.gameUiManager.getGameUiByGame(this.game.innerGames[i]);
 	}
 }
 

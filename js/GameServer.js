@@ -5,11 +5,13 @@
 
 var GameServer = function(options)
 {
-	this.games = options.game;	
+	this.game = options.game;	
 	this.players = options.players;
 	this.callbacks = {
 		finish: options.finish
 	}
+	this.gameIndex = [];
+	this.createGameIndex(this.game);
 }
 
 GameServer.prototype = {
@@ -49,7 +51,7 @@ GameServer.prototype = {
 		this.expectingAnswer = true;
 	},
 
-	awardState: function(game)
+	awardState: function()
 	{
 		this.currentGame.state = this.currentPlayerIndex;
 
@@ -72,8 +74,16 @@ GameServer.prototype = {
 	{
 		var player = state != 'stalemate' ? this.players[state] : 'stalemate';
 		options.finish.call(this, player);
+	},
+
+	createGameIndex: function(game)
+	{
+		this.gameIndex.push(game);
+		if (!game.innerGames)
+			return;
+		for (var i = 0; i < game.innerGames.length; i++)
+			this.createGameIndex(game.innerGames[i]);
 	}
-	
 }
 
 })();
