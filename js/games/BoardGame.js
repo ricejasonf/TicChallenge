@@ -34,9 +34,9 @@ BoardGame.prototype = {
 
 	createInnerGame: function(gameData)
 	{
-		if (gameData == null)
+		if (gameData == null || !isNaN(gameData))
 			return new LeafGame(gameData);
-		return new BoardGame(gameData);
+		return gameData;
 	},
 
 	initGame: function(innerGames)

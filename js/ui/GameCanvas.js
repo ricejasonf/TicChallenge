@@ -27,7 +27,7 @@ GameCanvas.prototype = {
 		this.ctx.fillRect(0,0,w, w);
 		this.ctx.restore();
 		var ui = this.gameUis
-			.getGameUiByGame(this.gameServer.currentGame);
+			.getGameUiByGame(this.gameServer.game);
 		ui.render();
 		this.ctx.drawImage(ui.canvas, 0, 0);
 	},

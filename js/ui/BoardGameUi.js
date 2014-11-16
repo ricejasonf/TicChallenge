@@ -80,7 +80,7 @@ BoardGameUi.prototype = {
 	{
 		var w = this.width;
 		var i = Math.floor(3 * (y / w)) * 3
-			+ Math.floor(3 * (x / w)):
+			+ Math.floor(3 * (x / w));
 		if (i > 8)
 			throw "Index is invalid... check your math.";
 		return this.getInnerGameUi(i);
