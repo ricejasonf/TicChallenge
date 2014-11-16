@@ -25,6 +25,7 @@ BoardGame.prototype = {
 	type: 'BoardGame',
 	command: Games.command,
 	setCommandListener: Games.setCommandListener,
+	state:null,
 
 	_command: function(server, command, value)
 	{
@@ -53,7 +54,7 @@ BoardGame.prototype = {
 		if (this.state != null)
 			return this.state;
 		var states = [];
-		var nullCount;
+		var nullCount = 0;
 		for (var i = 0; i < 9; i++)
 		{
 			states.push(this.games[i].checkState());
@@ -93,6 +94,7 @@ LeafGame.prototype = {
 	type: 'LeafGame',
 	command: Games.command,
 	setCommandListener: Games.setCommandListener,
+	state:null,
 
 	checkState: function()
 	{
@@ -104,7 +106,7 @@ LeafGame.prototype = {
 		switch(command)
 		{
 			case 'open':
-				this.state = server.awardState();
+				server.awardState();
 		}
 	}
 }

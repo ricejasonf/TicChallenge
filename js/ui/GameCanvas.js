@@ -21,6 +21,7 @@ GameCanvas.prototype = {
 	{
 		var ui = this.gameUis
 			.getGameUiByGame(this.gameServer.currentGame);
+		ui.render();
 		this.ctx.drawImage(ui.canvas, 0, 0);
 	},
 

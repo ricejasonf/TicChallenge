@@ -5,7 +5,7 @@
 	
 var BoardGameUi = function(options)
 {
-	this.server = options;
+	this.server = options.server;
 	this.gameUiManager = options.gameUiManager;
 	this.game = options.game;
 	this.width = options.width;
@@ -41,36 +41,38 @@ BoardGameUi.prototype = {
 		ctx.lineTo(end, w);
 		ctx.moveTo(5, w*2);
 		ctx.lineTo(end, w*2);
-		ctx.ctx.stroke();
+		ctx.stroke();
 	},
 	renderInnerGame: function(i)
 	{
 		var gameUi = this.getInnerGameUi(i);
 		var w = Math.floor(this.width / 3);
+		
 		gameUi.render();
-		this.ctx.drawImage(gameUi.canvas, x, y, w, h);	
+		this.ctx.drawImage(gameUi.canvas, 
+				w * (i % 3), 
+				w * Math.floor(i / 3), 
+				w, w);	
 	},
 
 	click: function(x, y)
 	{
-		if (this.currentInnerGameUi)
-			this.currentInnerGameUi.click(x, y);
-		else
-			this.openGameByClick(x, y);
+		this.openGameByClick(x, y);
 	},
 
 	openGameByClick: function(x, y)
 	{
 		var gameUi = this.getInnerGameUiByPos(x, y);
-		this.currentInnerGameUi = gameUi;
 		this.server.command('open', gameUi.game);
 	},
 
 	getInnerGameUiByPos: function(x, y)
 	{
-		var w = this.width * 10;
-		var i = Math.floor(w / y) * 3 
-			+ Math.floor(w / x);
+		var w = this.width;
+		var i = Math.floor(y / w) * 30 
+			+ Math.floor(x / w) * 10;
+		if (i > 8)
+			throw "Index is invalid... check your math.";
 		return this.getInnerGameUi(i);
 	},
 

@@ -52,7 +52,7 @@ var server = new GameServer({
 	game: games[7],
 	finish: function(result) 
 	{
-		if (result = 'stalemate')
+		if (result == 'stalemate')
 			alert('DRAW');
 		else 
 			alert(result + ' wins!');
@@ -68,6 +68,7 @@ var gameUis = new GameUis({
 	width: 800
 });
 gameCanvas = new GameCanvas('my-canvas', server, gameUis); 
+server.startGame();
 
 
 })();

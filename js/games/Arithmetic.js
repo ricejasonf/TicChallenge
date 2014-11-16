@@ -14,6 +14,7 @@ Arithmetic.prototype = {
 	type: 'Arithmetic',
 	command: Games.command,
 	setCommandListener: Games.setCommandListener,
+	state:null,
 
 	checkState: function()
 	{

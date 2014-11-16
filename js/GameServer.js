@@ -6,7 +6,6 @@
 var GameServer = function(options)
 {
 	this.game = options.game;	
-	this.currentGame = this.game;
 	this.openGameFn = options.openGame;
 	this.players = options.players 
 		|| [ 'Player 1', 'Player 2'];
@@ -23,6 +22,11 @@ GameServer.prototype = {
 	currentGame: null,
 	gameExpectingAnswer: null,
 	acceptingCommands: true, //for animations or net based multiplayer
+
+	startGame: function()
+	{
+		this.command('open', this.game);
+	},
 
 	command: function(command, value, success)
 	{
@@ -64,6 +68,7 @@ GameServer.prototype = {
 		var state = this.game.checkState();
 		if (state !== null)
 			this.finish(state);
+		this.acceptingCommands = true;
 		this.expectingAnswer = null;
 		this.currentPlayerIndex = (this.currentPlayerIndex + 1) 
 			% this.players.length;
@@ -73,7 +78,7 @@ GameServer.prototype = {
 	finish: function(state)
 	{
 		var player = state != 'stalemate' ? this.players[state] : 'stalemate';
-		options.finish.call(this, player);
+		this.callbacks.finish.call(this, player);
 	},
 
 	createGameIndex: function(game)

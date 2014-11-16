@@ -27,17 +27,18 @@ GameUis.render = function()
 		this._render();
 		return;
 	}
+	this.ctx.textAlign = 'center';
 	this.ctx.textBaseline = 'middle';
 	var text;
 	if (this.game.state == 'stalemate')
 	{
-		this.ctx.font = Math.floor(this.width / 10) + "px Helvetica";
+		this.ctx.font = Math.floor(this.width / 2) + "px Helvetica";
 		text = 'DRAW';
 	}
 	else
 	{
 		text = playerSymbols[this.game.state]; 
-		this.ctx.font = Math.floor(this.width / 2) + "px Helvetica";
+		this.ctx.font = Math.floor(this.width) + "px Helvetica";
 	}
 
 	this.ctx.fillText(text, this.width / 2, this.width / 2);

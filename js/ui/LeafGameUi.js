@@ -5,7 +5,7 @@
 
 var LeafGameUi = function(options)
 {
-	this.server = options;
+	this.server = options.server;
 	this.game = options.game;
 	this.width = options.width;
 	this.canvas = document.createElement('canvas');
