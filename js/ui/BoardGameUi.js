@@ -79,8 +79,8 @@ BoardGameUi.prototype = {
 	getInnerGameUiByPos: function(x, y)
 	{
 		var w = this.width;
-		var i = Math.floor(y / w) * 30 
-			+ Math.floor(x / w) * 10;
+		var i = Math.floor(3 * (y / w)) * 3
+			+ Math.floor(3 * (x / w)):
 		if (i > 8)
 			throw "Index is invalid... check your math.";
 		return this.getInnerGameUi(i);
