@@ -5,6 +5,7 @@
 var x = 0;
 var y = 1;
 var n = null;
+var f = function() { return new Games.BoardGame({}) };
 
 var games = [];
 games.push(new Games.BoardGame({}));
@@ -31,7 +32,7 @@ games.push(new Games.BoardGame({
 	}));
 
 games.push(new Games.BoardGame({
-	innerGames: [	x, y, x, 
+	innerGames: [	f(), y, x, 
 					n, y, x, 
 					n, x, y]
 	}));

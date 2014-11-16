@@ -32,6 +32,8 @@ GameServer.prototype = {
 	{
 		if (!this.acceptingCommands)
 			return;
+		if (command == 'open' && value.state != null)
+			return;
 		this.acceptingCommands = false;
 		if (!this.expectingAnswer && command == 'open')		
 			this.setCurrentGame(value);
@@ -84,10 +86,10 @@ GameServer.prototype = {
 	createGameIndex: function(game)
 	{
 		this.gameIndex.push(game);
-		if (!game.innerGames)
+		if (!game.games)
 			return;
-		for (var i = 0; i < game.innerGames.length; i++)
-			this.createGameIndex(game.innerGames[i]);
+		for (var i = 0; i < game.games.length; i++)
+			this.createGameIndex(game.games[i]);
 	},
 
 	setCurrentGame: function(game)

@@ -18,6 +18,7 @@ var BoardGameUi = function(options)
 GameUis.BoardGame = BoardGameUi;
 
 BoardGameUi.prototype = {
+	padding:25,
 
 	render: GameUis.render,
 	_render: function()
@@ -30,28 +31,37 @@ BoardGameUi.prototype = {
 	renderGrid: function()
 	{
 		var w = Math.floor(this.width / 3);
-		var end = this.width - 5;
+		var p = this.padding;
+		var end = this.width - p;
 		var ctx = this.ctx;
+		ctx.save();
+		ctx.lineWidth = 10;
+		ctx.lineCap = 'round';
 		ctx.beginPath();
-		ctx.moveTo(w, 5);
+		ctx.moveTo(w, p);
 		ctx.lineTo(w, end);
-		ctx.moveTo(w*2, 5);
+		ctx.moveTo(w*2, p);
 		ctx.lineTo(w*2, end);
-		ctx.moveTo(5, w);
+		ctx.moveTo(p, w);
 		ctx.lineTo(end, w);
-		ctx.moveTo(5, w*2);
+		ctx.moveTo(p, w*2);
 		ctx.lineTo(end, w*2);
 		ctx.stroke();
+		ctx.restore();
 	},
 	renderInnerGame: function(i)
 	{
+		var padding = Math.floor(this.padding * 1.5);
+		var p = Math.floor(padding / 2);
 		var gameUi = this.getInnerGameUi(i);
 		var w = Math.floor(this.width / 3);
+		var x = w * (i % 3) + p;
+		var y = w * Math.floor(i / 3) + p
+		w -= padding;
 		
 		gameUi.render();
 		this.ctx.drawImage(gameUi.canvas, 
-				w * (i % 3), 
-				w * Math.floor(i / 3), 
+				x, y,
 				w, w);	
 	},
 

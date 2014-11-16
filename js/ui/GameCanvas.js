@@ -19,6 +19,13 @@ window.GameCanvas = GameCanvas;
 GameCanvas.prototype = {
 	render: function()
 	{
+		var w = this.canvas.width;
+		this.ctx.save();
+		this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+		this.ctx.clearRect(0, 0, w, w);
+		this.ctx.fillStyle="#009987";
+		this.ctx.fillRect(0,0,w, w);
+		this.ctx.restore();
 		var ui = this.gameUis
 			.getGameUiByGame(this.gameServer.currentGame);
 		ui.render();
