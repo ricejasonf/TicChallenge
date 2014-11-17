@@ -15,7 +15,7 @@ var BoardGameUi = function(options)
 GameUis.BoardGame = BoardGameUi;
 
 BoardGameUi.prototype = {
-	padding:25,
+	padding:17,
 
 	initCanvas: GameUis.initCanvas,
 	render: GameUis.render,
@@ -54,7 +54,6 @@ BoardGameUi.prototype = {
 		var w = Math.floor(this.width / 3);
 		var x = w * (i % 3) + p;
 		var y = w * Math.floor(i / 3) + p
-		w -= padding;
 
 		//translate context
 		ctx.save();
@@ -81,7 +80,18 @@ BoardGameUi.prototype = {
 	{
 		if (!gameUi.click)
 			return;
+		var padding = Math.floor(this.padding * 1.5);
+		var p = Math.floor(padding / 2);
 		var w = Math.floor(this.width / 3);
+		//account for padding :[]
+		if (x % w < p)
+			x += p - (x % w);
+		else if (x % w > w - p)
+			x -= w - p - (x % w);
+		if (y % w < p)
+			y += p - (y % w);
+		else if (y % w > w - p)
+			y -= w - p - (y % w);
 		x -= Math.floor(x / w) * w;
 		y -= Math.floor(y / w) * w;
 		x *= 3;

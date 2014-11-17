@@ -32,7 +32,7 @@ GameCanvas.prototype = {
 	{
 		var pos = this.getRelativeMousePosition(ev);
 		var ui = this.gameUis
-			.getGameUiByGame(this.gameServer.currentGame);
+			.getGameUiByGame(this.gameServer.game);
 		ui.click(pos.x, pos.y);
 	},
 
