@@ -19,19 +19,18 @@ BoardGameUi.prototype = {
 
 	initCanvas: GameUis.initCanvas,
 	render: GameUis.render,
-	_render: function()
+	_render: function(ctx)
 	{
-		this.renderGrid();
+		this.renderGrid(ctx);
 		for (var i = 0; i < 9; i++)
-			this.renderInnerGame(i);
+			this.renderInnerGame(i, ctx);
 	},
 
-	renderGrid: function()
+	renderGrid: function(ctx)
 	{
 		var w = Math.floor(this.width / 3);
 		var p = this.padding;
 		var end = this.width - p;
-		var ctx = this.ctx;
 		ctx.save();
 		ctx.lineWidth = 10;
 		ctx.lineCap = 'round';
@@ -47,7 +46,7 @@ BoardGameUi.prototype = {
 		ctx.stroke();
 		ctx.restore();
 	},
-	renderInnerGame: function(i)
+	renderInnerGame: function(i, ctx)
 	{
 		var padding = Math.floor(this.padding * 1.5);
 		var p = Math.floor(padding / 2);
@@ -56,11 +55,13 @@ BoardGameUi.prototype = {
 		var x = w * (i % 3) + p;
 		var y = w * Math.floor(i / 3) + p
 		w -= padding;
-		
-		gameUi.render();
-		this.ctx.drawImage(gameUi.canvas, 
-				x, y,
-				w, w);	
+
+		//translate context
+		ctx.save();
+		ctx.translate(x, y);	
+		ctx.scale(.3, .3);
+		gameUi.render(ctx);
+		ctx.restore();
 	},
 
 	click: function(x, y)
@@ -72,6 +73,20 @@ BoardGameUi.prototype = {
 	{
 		var gameUi = this.getInnerGameUiByPos(x, y);
 		this.server.command('open', gameUi.game);
+		//only if we don't need to zoom (not implemented yet)
+		this.innerGameClick(gameUi, x, y);
+	},
+
+	innerGameClick: function(gameUi, x, y)
+	{
+		if (!gameUi.click)
+			return;
+		var w = Math.floor(this.width / 3);
+		x -= Math.floor(x / w) * w;
+		y -= Math.floor(y / w) * w;
+		x *= 3;
+		y *= 3;
+		gameUi.click(x, y);
 	},
 
 	getInnerGameUiByPos: function(x, y)

@@ -6,15 +6,15 @@ var playerSymbols = [
 	'x',	
 	'o'
 ];
-var canvas = document.createElement('canvas');
-var ctx = canvas.getContext('2d');
+var playerColors = [
+	"#009987",
+	"#990012"
+];
 
 var GameUis = function(options)
 {
 	this.server = options.server;
 	this.width = options.width;
-	canvas.width = this.width;
-	canvas.height = this.width;
 
 	this.index = {};
 
@@ -23,37 +23,36 @@ window.GameUis = GameUis;
 
 GameUis.initCanvas = function()
 {
-	this.canvas = canvas;
-	this.ctx = ctx;
+
 }
 
-GameUis.render = function()
+GameUis.render = function(ctx)
 {
-	this.ctx.save();
-	this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-	//this.ctx.clearRect(0, 0, this.width, this.width);
+	ctx.save();
+	ctx.clearRect(0, 0, this.width, this.width);
 	if (this.game.state == null)
 	{
-		this._render();
-		this.ctx.restore();
+		this._render(ctx);
+		ctx.restore();
 		return;
 	}
-	this.ctx.textAlign = 'center';
-	this.ctx.textBaseline = 'middle';
+	ctx.textAlign = 'center';
+	ctx.textBaseline = 'middle';
 	var text;
 	if (this.game.state == 'stalemate')
 	{
-		this.ctx.font = Math.floor(this.width / 2) + "px Helvetica";
+		ctx.font = Math.floor(this.width / 4) + "px Helvetica";
 		text = 'DRAW';
 	}
 	else
 	{
+		ctx.fillStyle=playerColors[this.game.state];
 		text = playerSymbols[this.game.state]; 
-		this.ctx.font = Math.floor(this.width) + "px Helvetica";
+		ctx.font = Math.floor(this.width) + "px Helvetica";
 	}
 
-	this.ctx.fillText(text, this.width / 2, this.width / 2);
-	this.ctx.restore();
+	ctx.fillText(text, this.width / 2, this.width / 2);
+	ctx.restore();
 }
 
 GameUis.prototype = {
