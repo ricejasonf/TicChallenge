@@ -9,17 +9,15 @@ var BoardGameUi = function(options)
 	this.gameUiManager = options.gameUiManager;
 	this.game = options.game;
 	this.width = options.width;
+	this.initCanvas();
 
-	this.canvas = document.createElement('canvas');
-	this.canvas.width = this.width;
-	this.canvas.height = this.width;
-	this.ctx = this.canvas.getContext('2d');
 }
 GameUis.BoardGame = BoardGameUi;
 
 BoardGameUi.prototype = {
 	padding:25,
 
+	initCanvas: GameUis.initCanvas,
 	render: GameUis.render,
 	_render: function()
 	{

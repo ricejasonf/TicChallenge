@@ -6,25 +6,36 @@ var playerSymbols = [
 	'x',	
 	'o'
 ];
+var canvas = document.createElement('canvas');
+var ctx = canvas.getContext('2d');
 
 var GameUis = function(options)
 {
 	this.server = options.server;
 	this.width = options.width;
+	canvas.width = this.width;
+	canvas.height = this.width;
 
 	this.index = {};
+
 }
 window.GameUis = GameUis;
+
+GameUis.initCanvas = function()
+{
+	this.canvas = canvas;
+	this.ctx = ctx;
+}
 
 GameUis.render = function()
 {
 	this.ctx.save();
 	this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-	this.ctx.clearRect(0, 0, this.width, this.width);
-	this.ctx.restore();
+	//this.ctx.clearRect(0, 0, this.width, this.width);
 	if (this.game.state == null)
 	{
 		this._render();
+		this.ctx.restore();
 		return;
 	}
 	this.ctx.textAlign = 'center';
@@ -42,7 +53,7 @@ GameUis.render = function()
 	}
 
 	this.ctx.fillText(text, this.width / 2, this.width / 2);
-
+	this.ctx.restore();
 }
 
 GameUis.prototype = {

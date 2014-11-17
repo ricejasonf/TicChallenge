@@ -8,6 +8,7 @@ var LeafGameUi = function(options)
 	this.server = options.server;
 	this.game = options.game;
 	this.width = options.width;
+	this.initCanvas();
 	this.canvas = document.createElement('canvas');
 	this.canvas.width = this.width;
 	this.canvas.height = this.width;
@@ -16,6 +17,7 @@ var LeafGameUi = function(options)
 GameUis.LeafGame = LeafGameUi;
 
 LeafGameUi.prototype = {
+	initCanvas: GameUis.initCanvas,
 	render: GameUis.render,
 	_render: function() { }
 }
