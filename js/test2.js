@@ -5,8 +5,8 @@
 var createGame = function() { return new Games.BoardGame({}) };
 var createDeepGame = function(layers)
 {
-	if (layers > 3)
-		layers = 3;
+	if (layers > 4)
+		layers = 4;
 	if (layers < 1)
 		return null;
 	var f = layers > 0 
@@ -19,7 +19,7 @@ var createDeepGame = function(layers)
 	});
 }
 var server = new GameServer({
-	game: createDeepGame(3),
+	game: createDeepGame(4),
 	finish: function(result) 
 	{
 		if (result == 'stalemate')

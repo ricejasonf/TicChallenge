@@ -19,7 +19,9 @@ GameUis.LeafGame = LeafGameUi;
 LeafGameUi.prototype = {
 	initCanvas: GameUis.initCanvas,
 	render: GameUis.render,
-	_render: function() { }
+	_render: function(ctx) 
+	{ 
+	}
 }
 
 })(window.GameUis);

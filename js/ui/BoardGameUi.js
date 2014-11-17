@@ -15,20 +15,20 @@ var BoardGameUi = function(options)
 GameUis.BoardGame = BoardGameUi;
 
 BoardGameUi.prototype = {
-	padding:17,
+	padding:0,
 
 	initCanvas: GameUis.initCanvas,
 	render: GameUis.render,
 	_render: function(ctx)
 	{
-		this.renderGrid(ctx);
 		for (var i = 0; i < 9; i++)
 			this.renderInnerGame(i, ctx);
+		this.renderGrid(ctx);
 	},
 
 	renderGrid: function(ctx)
 	{
-		var w = Math.floor(this.width / 3);
+		var w = this.width / 3;
 		var p = this.padding;
 		var end = this.width - p;
 		ctx.save();
@@ -48,17 +48,17 @@ BoardGameUi.prototype = {
 	},
 	renderInnerGame: function(i, ctx)
 	{
-		var padding = Math.floor(this.padding * 1.5);
-		var p = Math.floor(padding / 2);
+		var padding = this.padding * 1.5;
+		var p = padding / 2;
 		var gameUi = this.getInnerGameUi(i);
-		var w = Math.floor(this.width / 3);
-		var x = w * (i % 3) + p;
-		var y = w * Math.floor(i / 3) + p
+		var w = this.width / 3;
+		var x = w * Math.floor(i % 3) + p;
+		var y = w * Math.floor(i / 3) + p;
 
 		//translate context
 		ctx.save();
 		ctx.translate(x, y);	
-		ctx.scale(.3, .3);
+		ctx.scale(.3333, .3333);
 		gameUi.render(ctx);
 		ctx.restore();
 	},
@@ -71,32 +71,32 @@ BoardGameUi.prototype = {
 	openGameByClick: function(x, y)
 	{
 		var gameUi = this.getInnerGameUiByPos(x, y);
-		this.server.command('open', gameUi.game);
-		//only if we don't need to zoom (not implemented yet)
-		this.innerGameClick(gameUi, x, y);
+		if (this.innerGameClick(gameUi, x, y))
+			this.server.command('open', gameUi.game);
 	},
 
 	innerGameClick: function(gameUi, x, y)
 	{
 		if (!gameUi.click)
-			return;
-		var padding = Math.floor(this.padding * 1.5);
-		var p = Math.floor(padding / 2);
-		var w = Math.floor(this.width / 3);
+			return true;
+		var padding = this.padding * 1.5;
+		var p = padding / 2;
+		var w = this.width / 3;
 		//account for padding :[]
 		if (x % w < p)
-			x += p - (x % w);
+			return false;
 		else if (x % w > w - p)
-			x -= w - p - (x % w);
+			return false;
 		if (y % w < p)
-			y += p - (y % w);
+			return false;
 		else if (y % w > w - p)
-			y -= w - p - (y % w);
-		x -= Math.floor(x / w) * w;
-		y -= Math.floor(y / w) * w;
+			return false;
+		x -= Math.floor(x / w) * w + p;
+		y -= Math.floor(y / w) * w + p;
 		x *= 3;
 		y *= 3;
 		gameUi.click(x, y);
+		return true;
 	},
 
 	getInnerGameUiByPos: function(x, y)

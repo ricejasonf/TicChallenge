@@ -25,11 +25,21 @@ GameUis.initCanvas = function()
 {
 
 }
+//random color for testing
+function getRndColor() 
+{
+    var r = 255*Math.random()|0,
+        g = 255*Math.random()|0,
+        b = 255*Math.random()|0;
+    return 'rgb(' + r + ',' + g + ',' + b + ')';
+}
 
 GameUis.render = function(ctx)
 {
 	ctx.save();
-	ctx.clearRect(0, 0, this.width, this.width);
+	var p = this.padding || 0;
+	ctx.fillStyle = getRndColor();
+	ctx.fillRect(p/2, p/2, this.width - p, this.width - p);
 	if (this.game.state == null)
 	{
 		this._render(ctx);
@@ -41,6 +51,7 @@ GameUis.render = function(ctx)
 	var text;
 	if (this.game.state == 'stalemate')
 	{
+		ctx.fillStyle = 'black';
 		ctx.font = Math.floor(this.width / 4) + "px Helvetica";
 		text = 'DRAW';
 	}
