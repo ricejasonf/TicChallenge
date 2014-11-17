@@ -19,7 +19,7 @@ var createDeepGame = function(layers)
 	});
 }
 var server = new GameServer({
-	game: createDeepGame(4),
+	game: createDeepGame(3),
 	finish: function(result) 
 	{
 		if (result == 'stalemate')
